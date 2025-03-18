@@ -27,6 +27,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Arrays;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AssignmentHints;
 import org.owasp.webgoat.container.assignments.AttackResult;
@@ -45,8 +47,10 @@ public class SSRFTask2 extends AssignmentEndpoint {
     return furBall(url);
   }
 
+  private static final List<String> AUTHORIZED_URLS = List.of("http://ifconfig.pro");
+  
   protected AttackResult furBall(String url) {
-    if (url.matches("http://ifconfig.pro")) {
+    if (AUTHORIZED_URLS.contains(url)) {
       String html;
       try (InputStream in = new URL(url).openStream()) {
         html =
